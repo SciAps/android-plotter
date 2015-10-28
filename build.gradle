@@ -4,26 +4,29 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.1'
+        classpath 'com.android.tools.build:gradle:1.2.3'
     }
 }
 
-apply plugin: 'android-library'
+apply plugin: 'com.android.library'
 apply plugin: 'eclipse'
-
-repositories {
-  mavenCentral()
-}
 
 dependencies {
   //compile fileTree(dir: 'libs', include: '*.jar')
-  compile 'com.android.support:support-v4:19.0.1'
+  compile 'com.android.support:support-v4:21.0.3'
+  compile 'com.dev-smart:devsmart-android:0.1.5'
   compile project(':AndroidEssentials')
 }
 
 android {
-    buildToolsVersion "19.0.1"
-    compileSdkVersion 10
+    compileSdkVersion 19
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 14
+    }
+
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
