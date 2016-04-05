@@ -11,12 +11,12 @@ import java.util.List;
  */
 public final class LineRenderer implements DataRenderer {
     public static class XYPair {
-        public float x;
-        public float y;
+        public float mX;
+        public float mY;
 
         public XYPair(float x, float y) {
-            this.x = x;
-            this.y = y;
+            this.mX = x;
+            this.mY = y;
         }
     }
 
@@ -37,8 +37,8 @@ public final class LineRenderer implements DataRenderer {
         float[] origin = {0, 0};
         coordSystem.mapPoints(origin);
         for (XYPair xyPair : mLinesFromOriginList) {
-            point[0] = xyPair.x;
-            point[1] = xyPair.y;
+            point[0] = xyPair.mX;
+            point[1] = xyPair.mY;
             coordSystem.mapPoints(point);
             canvas.drawLine(point[0], origin[1], point[0], point[1], mPaint);
         }
