@@ -26,6 +26,11 @@ android {
         targetSdkVersion 14
     }
 
+    lintOptions {
+        abortOnError false
+        disable 'InvalidPackage'
+    }
+
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
