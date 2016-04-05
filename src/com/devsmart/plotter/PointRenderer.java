@@ -5,7 +5,6 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 
 public class PointRenderer implements DataRenderer {
-
     private float[] mPoints;
     private final Paint mPaint = new Paint();
 
@@ -19,7 +18,6 @@ public class PointRenderer implements DataRenderer {
 
     @Override
     public void draw(Canvas canvas, RectF viewPort, CoordinateSystem coordSystem) {
-
         float[] point = new float[2];
         for (int i = 0; i < mPoints.length; i = i + 2) {
             if (viewPort.contains(mPoints[i], mPoints[i + 1])) {

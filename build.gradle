@@ -40,4 +40,3 @@ android {
         instrumentTest.setRoot('tests')
     }
 }
-

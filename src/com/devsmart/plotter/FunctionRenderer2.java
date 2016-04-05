@@ -6,14 +6,12 @@ import android.graphics.Path;
 import android.graphics.RectF;
 
 public class FunctionRenderer2 implements DataRenderer {
-
     public interface GraphFunction {
         double value(double x);
     }
 
     private final GraphFunction mFunction;
     protected final Paint mPaint = new Paint();
-
 
     public FunctionRenderer2(GraphFunction f, int color) {
         mFunction = f;

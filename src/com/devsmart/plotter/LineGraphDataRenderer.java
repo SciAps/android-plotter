@@ -16,15 +16,15 @@ public class LineGraphDataRenderer implements DataRenderer {
         mPointPaint.setStrokeWidth(2.0f);
     }
 
-    RectF pixel = new RectF();
-    RectF pixelBin = new RectF();
+    RectF mPixel = new RectF();
+    RectF mPixelBin = new RectF();
 
     public void draw(Canvas canvas, RectF viewPort, CoordinateSystem coordSystem) {
         final float xBinWidth = viewPort.width() / canvas.getWidth();
-        pixelBin.left = viewPort.left - xBinWidth;
-        pixelBin.right = viewPort.left;
-        pixelBin.bottom = Float.POSITIVE_INFINITY;
-        pixelBin.top = Float.NEGATIVE_INFINITY;
+        mPixelBin.left = viewPort.left - xBinWidth;
+        mPixelBin.right = viewPort.left;
+        mPixelBin.bottom = Float.POSITIVE_INFINITY;
+        mPixelBin.top = Float.NEGATIVE_INFINITY;
 
         float[] lastpoint = new float[]{Float.NaN, Float.NaN};
 
@@ -43,16 +43,16 @@ public class LineGraphDataRenderer implements DataRenderer {
 
         boolean findOneMore = false;
         while (it.hasNext()) {
-            pixelBin.offset(xBinWidth, 0);
-            pixelBin.bottom = Float.POSITIVE_INFINITY;
-            pixelBin.top = Float.NEGATIVE_INFINITY;
+            mPixelBin.offset(xBinWidth, 0);
+            mPixelBin.bottom = Float.POSITIVE_INFINITY;
+            mPixelBin.top = Float.NEGATIVE_INFINITY;
 
-            if (fillPixelBin(pixelBin, it)) {
+            if (fillPixelBin(mPixelBin, it)) {
                 //draw pixel
-                coordSystem.mapRect(pixel, pixelBin);
-                canvas.drawLine(lastpoint[0], lastpoint[1], pixel.left, pixel.top, mPointPaint);
-                lastpoint[0] = pixel.left;
-                lastpoint[1] = pixel.top;
+                coordSystem.mapRect(mPixel, mPixelBin);
+                canvas.drawLine(lastpoint[0], lastpoint[1], mPixel.left, mPixel.top, mPointPaint);
+                lastpoint[0] = mPixel.left;
+                lastpoint[1] = mPixel.top;
                 if (findOneMore) {
                     break;
                 }

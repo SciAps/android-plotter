@@ -24,9 +24,9 @@ public final class SimpleAxisRenderer implements AxisRenderer {
     private float[] mYAxis;
     private float[] mXAxis;
     private float[] points = new float[4];
-    private Rect bounds = new Rect();
-    private Rect graphArea = new Rect();
-    private Matrix m = new Matrix();
+    private Rect mBounds = new Rect();
+    private Rect mGraphArea = new Rect();
+    private Matrix mMatrix = new Matrix();
 
     public SimpleAxisRenderer(Context context) {
         mDisplayMetrics = context.getResources().getDisplayMetrics();
@@ -64,9 +64,9 @@ public final class SimpleAxisRenderer implements AxisRenderer {
     public void drawAxis(Canvas canvas, final int canvasWidth, final int canvasHeight, RectF viewPort, CoordinateSystem coordSystem) {
         measureGraphArea(canvasWidth, canvasHeight);
 
-        m.setRectToRect(new RectF(0, 0, graphArea.width(), graphArea.height()), new RectF(graphArea), ScaleToFit.FILL);
-        m.postScale(1, -1);
-        m.postTranslate(0, graphArea.height());
+        mMatrix.setRectToRect(new RectF(0, 0, mGraphArea.width(), mGraphArea.height()), new RectF(mGraphArea), ScaleToFit.FILL);
+        mMatrix.postScale(1, -1);
+        mMatrix.postTranslate(0, mGraphArea.height());
 
         //Debug axis display
         //canvas.drawText(viewPort.toString(), 50, 50, mAxisTickPaint);
@@ -76,9 +76,9 @@ public final class SimpleAxisRenderer implements AxisRenderer {
             canvas.drawLines(mXAxis, mAxisTickPaint);
 
             //draw label
-            mAxisLabelPaint.getTextBounds(mXAxisLabel, 0, mXAxisLabel.length(), bounds);
-            float y = canvasHeight - mPlotMargins.bottom + bounds.bottom + TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3, mDisplayMetrics);
-            canvas.drawText(mXAxisLabel, (mXAxis[2] - mXAxis[0]) / 2 - bounds.width() / 2 + mXAxis[0], y, mAxisLabelPaint);
+            mAxisLabelPaint.getTextBounds(mXAxisLabel, 0, mXAxisLabel.length(), mBounds);
+            float y = canvasHeight - mPlotMargins.bottom + mBounds.bottom + TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3, mDisplayMetrics);
+            canvas.drawText(mXAxisLabel, (mXAxis[2] - mXAxis[0]) / 2 - mBounds.width() / 2 + mXAxis[0], y, mAxisLabelPaint);
 
             //draw ticks
             final float dist = viewPort.width() / numDivisions;
@@ -89,7 +89,7 @@ public final class SimpleAxisRenderer implements AxisRenderer {
                 points[2] = xPoint;
                 points[3] = 0;
                 coordSystem.mapPoints(points);
-                m.mapPoints(points);
+                mMatrix.mapPoints(points);
                 points[1] = mXAxis[1];
                 points[3] = mXAxis[1] - TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, mDisplayMetrics);
 
@@ -97,9 +97,9 @@ public final class SimpleAxisRenderer implements AxisRenderer {
                     canvas.drawLines(points, mAxisTickPaint);
 
                     String label = getTickLabel(xPoint);
-                    mAxisTickPaint.getTextBounds(label, 0, label.length(), bounds);
+                    mAxisTickPaint.getTextBounds(label, 0, label.length(), mBounds);
 
-                    canvas.drawText(label, points[0] - bounds.width() / 2, points[1] + bounds.height() + TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, mDisplayMetrics), mAxisTickPaint);
+                    canvas.drawText(label, points[0] - mBounds.width() / 2, points[1] + mBounds.height() + TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, mDisplayMetrics), mAxisTickPaint);
                 }
 
                 xPoint += dist;
@@ -111,10 +111,10 @@ public final class SimpleAxisRenderer implements AxisRenderer {
             canvas.drawLines(mYAxis, mAxisTickPaint);
 
             //draw label
-            mAxisLabelPaint.getTextBounds(mYAxisLabel, 0, mYAxisLabel.length(), bounds);
+            mAxisLabelPaint.getTextBounds(mYAxisLabel, 0, mYAxisLabel.length(), mBounds);
             canvas.save();
             points[0] = mPlotMargins.left;
-            points[1] = (mYAxis[3] - mYAxis[1]) / 2 + bounds.width() / 2;
+            points[1] = (mYAxis[3] - mYAxis[1]) / 2 + mBounds.width() / 2;
             canvas.rotate(-90, points[0], points[1]);
             canvas.drawText(mYAxisLabel, points[0], points[1], mAxisLabelPaint);
             canvas.restore();
@@ -127,7 +127,7 @@ public final class SimpleAxisRenderer implements AxisRenderer {
                 points[2] = 0;
                 points[3] = yPoint;
                 coordSystem.mapPoints(points);
-                m.mapPoints(points);
+                mMatrix.mapPoints(points);
                 points[0] = mYAxis[0];
                 points[2] = mYAxis[0] + TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, mDisplayMetrics);
 
@@ -135,10 +135,10 @@ public final class SimpleAxisRenderer implements AxisRenderer {
                     canvas.drawLines(points, mAxisTickPaint);
 
                     String label = getTickLabel(yPoint);
-                    mAxisTickPaint.getTextBounds(label, 0, label.length(), bounds);
+                    mAxisTickPaint.getTextBounds(label, 0, label.length(), mBounds);
                     canvas.save();
-                    points[2] = points[0] - bounds.height() / 2 - TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, mDisplayMetrics);
-                    points[3] = points[1] + bounds.width() / 2;
+                    points[2] = points[0] - mBounds.height() / 2 - TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, mDisplayMetrics);
+                    points[3] = points[1] + mBounds.width() / 2;
                     canvas.rotate(-90, points[2], points[3]);
                     canvas.drawText(label, points[2], points[3], mAxisTickPaint);
                     canvas.restore();
@@ -153,12 +153,12 @@ public final class SimpleAxisRenderer implements AxisRenderer {
     public Rect measureGraphArea(int screenWidth, int screenHeight) {
         calcBounds(screenWidth, screenHeight);
 
-        graphArea.left = (int) Math.floor(mXAxis[0]);
-        graphArea.right = (int) Math.ceil(mXAxis[2]);
-        graphArea.top = (int) Math.floor(mYAxis[1]);
-        graphArea.bottom = (int) Math.ceil(mYAxis[3]);
+        mGraphArea.left = (int) Math.floor(mXAxis[0]);
+        mGraphArea.right = (int) Math.ceil(mXAxis[2]);
+        mGraphArea.top = (int) Math.floor(mYAxis[1]);
+        mGraphArea.bottom = (int) Math.ceil(mYAxis[3]);
 
-        return graphArea;
+        return mGraphArea;
     }
 
     private void init() {
@@ -172,11 +172,11 @@ public final class SimpleAxisRenderer implements AxisRenderer {
     }
 
     private void calcBounds(final int canvasWidth, final int canvasHeight) {
-        mAxisLabelPaint.getTextBounds("1", 0, 1, bounds);
-        float axisLabelHeight = bounds.height();
+        mAxisLabelPaint.getTextBounds("1", 0, 1, mBounds);
+        float axisLabelHeight = mBounds.height();
 
-        mAxisTickPaint.getTextBounds("1", 0, 1, bounds);
-        float tickLabelHeight = bounds.height();
+        mAxisTickPaint.getTextBounds("1", 0, 1, mBounds);
+        float tickLabelHeight = mBounds.height();
 
         float axisLabelBoundery = axisLabelHeight + tickLabelHeight + TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3, mDisplayMetrics);
 

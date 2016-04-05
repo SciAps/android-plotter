@@ -82,9 +82,9 @@ public final class OversampleFunctionRenderer implements DataRenderer {
 
     private void drawLine(Path path, float x, CoordinateSystem coordSystem) {
         mPoints[0] = x;
-        mPoints[1] = (float) mMinMax.min;
+        mPoints[1] = (float) mMinMax.mMin;
         mPoints[2] = x;
-        mPoints[3] = (float) mMinMax.max;
+        mPoints[3] = (float) mMinMax.mMax;
 
         coordSystem.mapPoints(mPoints);
         if (FunctionRenderer2.isRealNumber(mPoints[0]) && FunctionRenderer2.isRealNumber(mPoints[1])) {
@@ -142,22 +142,22 @@ public final class OversampleFunctionRenderer implements DataRenderer {
     }
 
     private static class MinMax {
-        double min = Double.NaN;
-        double max = Double.NaN;
+        double mMin = Double.NaN;
+        double mMax = Double.NaN;
 
         public void addValue(double value) {
-            if (value < min || Double.isNaN(min)) {
-                min = value;
+            if (value < mMin || Double.isNaN(mMin)) {
+                mMin = value;
             }
 
-            if (value > max || Double.isNaN(max)) {
-                max = value;
+            if (value > mMax || Double.isNaN(mMax)) {
+                mMax = value;
             }
         }
 
         public void clear() {
-            min = Double.NaN;
-            max = Double.NaN;
+            mMin = Double.NaN;
+            mMax = Double.NaN;
         }
     }
 }
