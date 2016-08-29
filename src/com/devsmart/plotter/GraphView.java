@@ -11,7 +11,6 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -165,7 +164,7 @@ public final class GraphView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         cancelAnimation();
 
-        final int action = MotionEventCompat.getActionMasked(event);
+        final int action = event.getAction() & MotionEvent.ACTION_MASK;
         switch (action) {
             case MotionEvent.ACTION_UP:
                 doBoundsCheck();
