@@ -14,8 +14,7 @@ apply plugin: 'eclipse'
 
 dependencies {
   //compile fileTree(dir: 'libs', include: '*.jar')
-  compile 'com.dev-smart:devsmart-android:0.1.6-SNAPSHOT'
-    //compile 'com.dev-smart:devsmart-android:0.1.5'
+  compile 'com.dev-smart:devsmart-android:0.1.6'
   compile project.androidessentials
 
 }
