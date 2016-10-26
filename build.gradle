@@ -4,7 +4,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.2.3'
+        classpath 'com.android.tools.build:gradle:2.1.3'
     }
 }
 
@@ -12,19 +12,17 @@ apply plugin: 'com.android.library'
 apply plugin: 'eclipse'
 
 dependencies {
-  //compile fileTree(dir: 'libs', include: '*.jar')
-  compile 'com.android.support:support-v4:21.0.3'
-  compile 'com.dev-smart:devsmart-android:0.1.5'
-  compile project(':AndroidEssentials')
+    compile 'com.dev-smart:devsmart-android:0.1.6'
+    compile project(':AndroidCommon')
 }
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "21.1.2"
+    buildToolsVersion "20.0.0"
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 14
+        minSdkVersion 17
+        targetSdkVersion 19
     }
 
     sourceSets {
@@ -43,6 +41,7 @@ android {
 
     lintOptions {
           abortOnError false
+        disable 'InvalidPackage'
     }
 }
 
