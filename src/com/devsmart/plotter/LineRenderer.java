@@ -1,7 +1,9 @@
 package com.devsmart.plotter;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 
 import java.util.List;
@@ -52,7 +54,11 @@ public final class LineRenderer implements DataRenderer {
             if (xyPair.atomicSymbol != null) {
                 canvas.save();
                 canvas.scale(1, -1);
-                canvas.drawText(xyPair.atomicSymbol, point[0], -point[1], mPaint);
+
+                mPaint.setTextSize(20);
+                mPaint.setStyle(Paint.Style.FILL);
+                canvas.drawText(xyPair.atomicSymbol, point[0]-10, -point[1], mPaint);
+
                 canvas.restore();
             }
         }
