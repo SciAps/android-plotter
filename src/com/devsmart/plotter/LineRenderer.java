@@ -13,10 +13,17 @@ public final class LineRenderer implements DataRenderer {
     public static class XYPair {
         public float x;
         public float y;
+        public String atomicSymbol;
 
         public XYPair(float x, float y) {
             this.x = x;
             this.y = y;
+        }
+
+        public XYPair(float x, float y, String atomicSymbol) {
+            this.x = x;
+            this.y = y;
+            this.atomicSymbol = atomicSymbol;
         }
     }
 
@@ -41,6 +48,13 @@ public final class LineRenderer implements DataRenderer {
             point[1] = xyPair.y;
             coordSystem.mapPoints(point);
             canvas.drawLine(point[0], origin[1], point[0], point[1], mPaint);
+
+            if (xyPair.atomicSymbol != null) {
+                canvas.save();
+                canvas.scale(1, -1);
+                canvas.drawText(xyPair.atomicSymbol, point[0], -point[1], mPaint);
+                canvas.restore();
+            }
         }
     }
 
