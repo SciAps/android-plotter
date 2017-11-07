@@ -57,7 +57,12 @@ public final class LineRenderer implements DataRenderer {
 
                 mPaint.setTextSize(20);
                 mPaint.setStyle(Paint.Style.FILL);
-                canvas.drawText(xyPair.atomicSymbol, point[0]-10, -point[1], mPaint);
+
+                int shiftPixelLeft = 10;
+                if (xyPair.atomicSymbol.length() == 1) {
+                    shiftPixelLeft = 5;
+                }
+                canvas.drawText(xyPair.atomicSymbol, point[0]-shiftPixelLeft, -point[1], mPaint);
 
                 canvas.restore();
             }
