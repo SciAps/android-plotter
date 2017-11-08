@@ -10,12 +10,12 @@ public final class LineWithTypeRenderer implements DataRenderer {
     public static class XYPair {
         public float x;
         public float y;
-        public String atomicSymbol;
+        public String value;
 
-        public XYPair(float x, float y, String atomicSymbol) {
+        public XYPair(float x, float y, String value) {
             this.x = x;
             this.y = y;
-            this.atomicSymbol = atomicSymbol;
+            this.value = value;
         }
     }
 
@@ -56,7 +56,7 @@ public final class LineWithTypeRenderer implements DataRenderer {
             coordSystem.mapPoints(point);
             canvas.drawLine(point[0], origin[1], point[0], point[1], mPaint);
 
-            if (xyPair.atomicSymbol != null) {
+            if (xyPair.value != null) {
                 canvas.save();
                 canvas.scale(1, -1);
 
@@ -64,10 +64,10 @@ public final class LineWithTypeRenderer implements DataRenderer {
                 mPaint.setStyle(Paint.Style.FILL);
 
                 int shiftPixelLeft = 10;
-                if (xyPair.atomicSymbol.length() == 1) {
+                if (xyPair.value.length() == 1) {
                     shiftPixelLeft = 5;
                 }
-                canvas.drawText(xyPair.atomicSymbol, point[0]-shiftPixelLeft, -point[1], mPaint);
+                canvas.drawText(xyPair.value, point[0]-shiftPixelLeft, -point[1], mPaint);
 
                 canvas.restore();
             }
