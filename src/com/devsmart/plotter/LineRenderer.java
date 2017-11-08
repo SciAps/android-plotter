@@ -23,8 +23,9 @@ public final class LineRenderer implements DataRenderer {
     private final List<XYPair> mLinesFromOriginList;
     private final Paint mPaint = new Paint();
 
-    public LineRenderer(List<XYPair> linesFromOriginList) {
+    public LineRenderer(List<XYPair> linesFromOriginList, int color) {
         mLinesFromOriginList = linesFromOriginList;
+        mPaint.setColor(color);
         mPaint.setStrokeWidth(1.0f);
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.STROKE);
