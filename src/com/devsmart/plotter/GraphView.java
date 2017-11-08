@@ -204,6 +204,11 @@ public final class GraphView extends View {
         drawFrame(mViewPort);
     }
 
+    public void clearSeries() {
+        mPlotData.clear();
+        drawFrame(mViewPort);
+    }
+
     public void setViewportBounds(RectF bounds) {
         mViewPortBounds = bounds;
     }
