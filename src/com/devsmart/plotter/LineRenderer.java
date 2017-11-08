@@ -15,25 +15,20 @@ public final class LineRenderer implements DataRenderer {
     public static class XYPair {
         public float x;
         public float y;
-        public String atomicSymbol;
 
         public XYPair(float x, float y) {
             this.x = x;
             this.y = y;
         }
-
-        public XYPair(float x, float y, String atomicSymbol) {
-            this.x = x;
-            this.y = y;
-            this.atomicSymbol = atomicSymbol;
-        }
     }
 
     private final List<XYPair> mLinesFromOriginList;
     private final Paint mPaint = new Paint();
+    private int mColor;
 
     public LineRenderer(List<XYPair> linesFromOriginList, int color) {
         mLinesFromOriginList = linesFromOriginList;
+        mColor = color;
         mPaint.setColor(color);
         mPaint.setStrokeWidth(1.0f);
         mPaint.setAntiAlias(true);
@@ -42,6 +37,11 @@ public final class LineRenderer implements DataRenderer {
 
     @Override
     public void draw(Canvas canvas, RectF viewPort, CoordinateSystem coordSystem) {
+        mPaint.setColor(mColor);
+        mPaint.setStrokeWidth(1.0f);
+        mPaint.setAntiAlias(true);
+        mPaint.setStyle(Paint.Style.STROKE);
+
         float[] point = new float[2];
         float[] origin = {0, 0};
         coordSystem.mapPoints(origin);
@@ -50,22 +50,6 @@ public final class LineRenderer implements DataRenderer {
             point[1] = xyPair.y;
             coordSystem.mapPoints(point);
             canvas.drawLine(point[0], origin[1], point[0], point[1], mPaint);
-
-            if (xyPair.atomicSymbol != null) {
-                canvas.save();
-                canvas.scale(1, -1);
-
-                mPaint.setTextSize(20);
-                mPaint.setStyle(Paint.Style.FILL);
-
-                int shiftPixelLeft = 10;
-                if (xyPair.atomicSymbol.length() == 1) {
-                    shiftPixelLeft = 5;
-                }
-                canvas.drawText(xyPair.atomicSymbol, point[0]-shiftPixelLeft, -point[1], mPaint);
-
-                canvas.restore();
-            }
         }
     }
 
