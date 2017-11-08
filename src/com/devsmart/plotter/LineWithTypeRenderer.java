@@ -6,7 +6,7 @@ import android.graphics.RectF;
 
 import java.util.List;
 
-public final class ElementLineRenderer implements DataRenderer {
+public final class LineWithTypeRenderer implements DataRenderer {
     public static class XYPair {
         public float x;
         public float y;
@@ -23,13 +23,13 @@ public final class ElementLineRenderer implements DataRenderer {
     private final Paint mPaint = new Paint();
     private int mColor;
     private int mYPosition;
-    private String mEmissionType;
+    private String mLineType;
 
     private final int LEGEND_PADDING_LEFT = 55;
     private final int LEGEND_DIMENSION = 15;
     private final int TEXT_PADDING_LEFT = 50;
 
-    public ElementLineRenderer(List<XYPair> linesFromOriginList, String emissionType, int color, int yPosition) {
+    public LineWithTypeRenderer(List<XYPair> linesFromOriginList, String lineType, int color, int yPosition) {
         mLinesFromOriginList = linesFromOriginList;
         mColor = color;
         mPaint.setColor(color);
@@ -37,7 +37,7 @@ public final class ElementLineRenderer implements DataRenderer {
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.STROKE);
         mYPosition = yPosition;
-        mEmissionType = emissionType;
+        mLineType = lineType;
     }
 
     @Override
@@ -80,7 +80,7 @@ public final class ElementLineRenderer implements DataRenderer {
         canvas.save();
         canvas.scale(1, -1);
         mPaint.setTextSize(20);
-        canvas.drawText(mEmissionType, canvas.getWidth()-TEXT_PADDING_LEFT, -(canvas.getHeight()-LEGEND_DIMENSION-mYPosition), mPaint);
+        canvas.drawText(mLineType, canvas.getWidth()-TEXT_PADDING_LEFT, -(canvas.getHeight()-LEGEND_DIMENSION-mYPosition), mPaint);
         canvas.restore();
     }
 
