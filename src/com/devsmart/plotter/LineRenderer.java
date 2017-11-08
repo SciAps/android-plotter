@@ -1,9 +1,7 @@
 package com.devsmart.plotter;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.graphics.RectF;
 
 import java.util.List;
@@ -24,12 +22,9 @@ public final class LineRenderer implements DataRenderer {
 
     private final List<XYPair> mLinesFromOriginList;
     private final Paint mPaint = new Paint();
-    private int mColor;
 
-    public LineRenderer(List<XYPair> linesFromOriginList, int color) {
+    public LineRenderer(List<XYPair> linesFromOriginList) {
         mLinesFromOriginList = linesFromOriginList;
-        mColor = color;
-        mPaint.setColor(color);
         mPaint.setStrokeWidth(1.0f);
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.STROKE);
@@ -37,11 +32,6 @@ public final class LineRenderer implements DataRenderer {
 
     @Override
     public void draw(Canvas canvas, RectF viewPort, CoordinateSystem coordSystem) {
-        mPaint.setColor(mColor);
-        mPaint.setStrokeWidth(1.0f);
-        mPaint.setAntiAlias(true);
-        mPaint.setStyle(Paint.Style.STROKE);
-
         float[] point = new float[2];
         float[] origin = {0, 0};
         coordSystem.mapPoints(origin);
