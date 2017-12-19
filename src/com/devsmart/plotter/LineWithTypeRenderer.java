@@ -11,6 +11,7 @@ public final class LineWithTypeRenderer implements DataRenderer {
         public float x;
         public float y;
         public String value;
+        public boolean isViewportHeight;
 
         public XYPair(float x, float y, String value) {
             this.x = x;
@@ -52,7 +53,11 @@ public final class LineWithTypeRenderer implements DataRenderer {
         coordSystem.mapPoints(origin);
         for (XYPair xyPair : mLinesFromOriginList) {
             point[0] = xyPair.x;
-            point[1] = xyPair.y;
+            if (xyPair.isViewportHeight) {
+                point[1] = viewPort.height() - 50f;
+            } else {
+                point[1] = xyPair.y;
+            }
             coordSystem.mapPoints(point);
             canvas.drawLine(point[0], origin[1], point[0], point[1], mPaint);
 
@@ -72,6 +77,7 @@ public final class LineWithTypeRenderer implements DataRenderer {
                 canvas.restore();
             }
         }
+
 
         mPaint.setColor(mColor);
         mPaint.setStrokeWidth(3);
