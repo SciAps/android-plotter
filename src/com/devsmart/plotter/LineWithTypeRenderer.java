@@ -26,11 +26,7 @@ public final class LineWithTypeRenderer implements DataRenderer {
     private final List<XYPair> mLinesFromOriginList;
     private final Paint mPaint = new Paint();
 
-    private final int LEGEND_PADDING_LEFT = 55;
-    private final int LEGEND_DIMENSION = 15;
-    private final int TEXT_PADDING_LEFT = 50;
-
-    public LineWithTypeRenderer(List<XYPair> linesFromOriginList, String lineType, int yPosition) {
+    public LineWithTypeRenderer(List<XYPair> linesFromOriginList) {
         mLinesFromOriginList = linesFromOriginList;
         mPaint.setStrokeWidth(1.0f);
         mPaint.setAntiAlias(true);
