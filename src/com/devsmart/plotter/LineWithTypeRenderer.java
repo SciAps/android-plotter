@@ -1,6 +1,7 @@
 package com.devsmart.plotter;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
@@ -11,6 +12,9 @@ public final class LineWithTypeRenderer implements DataRenderer {
         public float x;
         public float y;
         public String value;
+        public String typeOfLine;
+        public boolean isViewportHeight;
+        public int mColor;
 
         public XYPair(float x, float y, String value) {
             this.x = x;
@@ -21,28 +25,16 @@ public final class LineWithTypeRenderer implements DataRenderer {
 
     private final List<XYPair> mLinesFromOriginList;
     private final Paint mPaint = new Paint();
-    private int mColor;
-    private int mYPosition;
-    private String mLineType;
 
-    private final int LEGEND_PADDING_LEFT = 55;
-    private final int LEGEND_DIMENSION = 15;
-    private final int TEXT_PADDING_LEFT = 50;
-
-    public LineWithTypeRenderer(List<XYPair> linesFromOriginList, String lineType, int color, int yPosition) {
+    public LineWithTypeRenderer(List<XYPair> linesFromOriginList) {
         mLinesFromOriginList = linesFromOriginList;
-        mColor = color;
-        mPaint.setColor(color);
         mPaint.setStrokeWidth(1.0f);
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.STROKE);
-        mYPosition = yPosition;
-        mLineType = lineType;
     }
 
     @Override
     public void draw(Canvas canvas, RectF viewPort, CoordinateSystem coordSystem) {
-        mPaint.setColor(mColor);
         mPaint.setStrokeWidth(1.0f);
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.STROKE);
@@ -51,10 +43,12 @@ public final class LineWithTypeRenderer implements DataRenderer {
         float[] origin = {0, 0};
         coordSystem.mapPoints(origin);
         for (XYPair xyPair : mLinesFromOriginList) {
+
+            mPaint.setColor(xyPair.mColor);
             point[0] = xyPair.x;
-            point[1] = xyPair.y;
+
             coordSystem.mapPoints(point);
-            canvas.drawLine(point[0], origin[1], point[0], point[1], mPaint);
+            canvas.drawLine(point[0], origin[1], point[0], canvas.getHeight()- 50f, mPaint);
 
             if (xyPair.value != null) {
                 canvas.save();
@@ -67,21 +61,11 @@ public final class LineWithTypeRenderer implements DataRenderer {
                 if (xyPair.value.length() == 1) {
                     shiftPixelLeft = 5;
                 }
-                canvas.drawText(xyPair.value, point[0]-shiftPixelLeft, -point[1], mPaint);
+                canvas.drawText(xyPair.value + " (" + xyPair.typeOfLine + ")", point[0]-shiftPixelLeft, -(canvas.getHeight()- 50f), mPaint);
 
                 canvas.restore();
             }
         }
-
-        mPaint.setColor(mColor);
-        mPaint.setStrokeWidth(3);
-        mPaint.setStyle(Paint.Style.FILL);
-        canvas.drawRect(canvas.getWidth()-LEGEND_DIMENSION-LEGEND_PADDING_LEFT, canvas.getHeight()-mYPosition, canvas.getWidth()-LEGEND_PADDING_LEFT, canvas.getHeight()-LEGEND_DIMENSION-mYPosition, mPaint);
-        canvas.save();
-        canvas.scale(1, -1);
-        mPaint.setTextSize(20);
-        canvas.drawText(mLineType, canvas.getWidth()-TEXT_PADDING_LEFT, -(canvas.getHeight()-LEGEND_DIMENSION-mYPosition), mPaint);
-        canvas.restore();
     }
 
     @Override
