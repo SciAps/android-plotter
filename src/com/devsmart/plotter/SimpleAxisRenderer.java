@@ -14,8 +14,8 @@ import android.util.TypedValue;
 public final class SimpleAxisRenderer implements AxisRenderer {
     private int numDivisions = 5;
     private boolean mDrawXAxis = true;
-    private boolean mDrawYAxis = true;
-    private Rect mPlotMargins = new Rect(20, 0, 0, 20);
+    public boolean mDrawYAxis = true;
+    public Rect mPlotMargins = new Rect(20, 0, 0, 20);
     private final Paint mAxisLabelPaint = new Paint();
     private final Paint mAxisTickPaint = new Paint();
     private String mXAxisLabel = "Wavelength";

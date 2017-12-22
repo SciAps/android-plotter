@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public final class GraphView extends View {
+public class GraphView extends View {
     public static void drawBitmap(Canvas c, int width, int height, List<DataRenderer> data, RectF viewport, CoordinateSystem coordinateSystem) {
         CoordinateSystem mCoordCopy = coordinateSystem.copy();
         mCoordCopy.interpolate(viewport, new RectF(0, 0, width, height));
@@ -95,7 +95,7 @@ public final class GraphView extends View {
     private BackgroundDrawTask mBackgroundDrawTask;
     private GestureDetector mPanGestureDetector;
     private XYScaleGestureDetector mScaleGestureDetector;
-    private AxisRenderer mAxisRenderer;
+    protected AxisRenderer mAxisRenderer;
     private Rect mGraphArea;
     private RectF mViewPortBounds;
     private Interpolator mAnimationInterpolator = null;
