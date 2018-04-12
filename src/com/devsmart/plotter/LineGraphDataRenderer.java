@@ -4,8 +4,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
-import com.sciaps.androidcommon.utils.PeekableIterator;
-
 public class LineGraphDataRenderer implements DataRenderer {
     protected final Paint mPointPaint = new Paint();
     protected Series mSeries;
