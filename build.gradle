@@ -12,13 +12,13 @@ apply plugin: 'com.android.library'
 apply plugin: 'eclipse'
 
 dependencies {
-    compile 'com.dev-smart:devsmart-android:0.1.6'
-    compile 'com.android.support:support-v4:19.0.1'
+    implementation 'com.dev-smart:devsmart-android:0.1.6'
+    implementation 'com.android.support:support-v4:19.0.1'
 }
 
 android {
     compileSdkVersion 17
-    buildToolsVersion "20.0.0"
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         minSdkVersion 17
@@ -40,7 +40,5 @@ android {
             res.srcDirs = ['res']
             assets.srcDirs = ['assets']
         }
-
-        instrumentTest.setRoot('tests')
     }
 }
