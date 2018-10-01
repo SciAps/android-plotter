@@ -13,10 +13,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'eclipse'
 
 dependencies {
-  //compile fileTree(dir: 'libs', include: '*.jar')
-  compile 'com.dev-smart:devsmart-android:0.1.12'
-  compile project.androidessentials
-
+    implementation 'com.dev-smart:devsmart-android:0.1.12'
+    implementation project.androidessentials
 }
 
 android {
@@ -38,6 +36,11 @@ android {
             res.srcDirs = ['res']
             assets.srcDirs = ['assets']
         }
+    }
+
+    lintOptions {
+        disable 'InvalidPackage','MissingTranslation','ProtectedPermissions'
+        abortOnError false
     }
 }
 
