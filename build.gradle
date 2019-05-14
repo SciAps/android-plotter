@@ -3,7 +3,6 @@ apply plugin: 'eclipse'
 
 dependencies {
     compile 'com.dev-smart:devsmart-android:0.1.6'
-    compile 'com.android.support:support-v4:19.0.1'
 }
 
 android {

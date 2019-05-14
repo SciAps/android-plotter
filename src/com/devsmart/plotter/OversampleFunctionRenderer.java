@@ -24,13 +24,6 @@ public final class OversampleFunctionRenderer implements DataRenderer {
         initPaint(color);
     }
 
-    public OversampleFunctionRenderer(FunctionRenderer2.GraphFunction f, double sampleRate, int color) {
-        mFunction = f;
-        mSampleRate = sampleRate;
-
-        initPaint(color);
-    }
-
     @Override
     public void draw(Canvas canvas, RectF viewPort, CoordinateSystem coordSystem) {
         if (mSamplePoints != null) {

@@ -34,12 +34,6 @@ public final class SimpleAxisRenderer implements AxisRenderer {
         init();
     }
 
-    public SimpleAxisRenderer(GraphView graphview) {
-        mDisplayMetrics = graphview.getContext().getResources().getDisplayMetrics();
-
-        init();
-    }
-
     @Override
     public void setAxisColor(int color) {
         mAxisTickPaint.setColor(color);
