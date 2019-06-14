@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'eclipse'
 
 dependencies {
-    compile 'com.dev-smart:devsmart-android:0.1.6'
+    compile 'com.dev-smart:devsmart-android:0.1.12'
 }
 
 android {
